@@ -1,0 +1,129 @@
+<div class="loader" *ngIf="loaderflag"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+                <div class="card">
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Product type</h6>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_1">
+                            <div class="card-body">
+                                <form class="pb-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" #searchcategory placeholder="Search" >
+                                        <div class="input-group-append">
+                                            <button class="btn btn-light" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+            
+                                <ul class="list-menu">
+                                    <li><a class="listsyles" (click)="productByName('men')">Mens </a></li>
+                                    <li><a class="listsyles"  (click)="productByName('women')">Women </a></li>
+                                    <li><a class="listsyles"  (click)="productByName('jewelery')">Jewellery </a></li>
+                                    <li><a class="listsyles"  (click)="productByName('electronics')">electronics </a></li>
+                                   
+                                </ul>
+            
+                            </div>
+                        </div>
+                    </article> 
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Price range </h6>
+                            </a>
+                        </header>
+                        <form [formGroup]="pricerangeForm">
+                            <div class="filter-content collapse show" id="collapse_3" style="">
+                                <div class="card-body">
+                                    <!-- <input type="range" class="custom-range" min="0" max="100" name=""> -->
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Min</label>
+                                            <input class="form-control" placeholder="$0" type="number" name="minlength" formControlName="minlength">
+                                        </div>
+                                        <div class="form-group text-right col-md-6">
+                                            <label>Max</label>
+                                            <input class="form-control" placeholder="$1,0000" type="number" name="maxlength" formControlName="maxlength">
+                                        </div>
+                                    </div> 
+                                    
+                                    <button type="submit" class="btn btn-block btn-primary" (click)="applySubmit()">Apply</button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                        
+                    </article>
+                </div> 
+        </div>
+        <div class="col-md-9">
+            <div class="fashion_section prostyles">
+                <div id="main_slider" class="carousel slide" data-ride="carousel">
+                   <div class="carousel-inner">
+                      <div class="carousel-item active" >
+                         <div class="container">
+                            <h1 class="fashion_taital">Product</h1>
+                            <div class="fashion_section_2">
+                               <div class="row">
+                                  <div class="col-lg-4 col-sm-4" *ngFor="let product of productArr;let i=index">
+                                     <div class="box_main">
+                                        
+                                        <div class="tshirt_img"><img [src]="product.image" width="165px" height="172px"></div>
+                                        <h6 class="shirt_text">
+                                            <a id="productid" (click)="productModels(product.id,mymodal)">{{product.title}}</a>
+                                        </h6>
+                                        
+                                        <h6>{{product.category}}</h6>
+                                        <p class="price_text">Price  <span style="color: #262626;">$ {{product.price}}</span></p>
+                                     </div>
+                                  </div>
+                                  
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                     
+                   </div>
+                </div>
+             </div>
+        </div>
+
+    </div>
+</div>
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Product Details</h4>
+    </div>
+    <div class="modal-body">
+        <!-- Product section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" [src]="productDetailByIdArr.image" alt="..." /></div>
+                    <div class="col-md-6">
+                        <!-- <div class="small mb-1">SKU: BST-498</div> -->
+                        <h4 class="display-5 fw-bolder">{{productDetailByIdArr.title}}</h4>
+                        <div class="fs-5 mb-5">
+                            <span class="text-decoration-line-through">$1000</span>
+                            <span>${{productDetailByIdArr.price}}</span>
+                        </div>
+                        <p class="lead">{{productDetailByIdArr.description}}</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    </div>
+</ng-template>
+
